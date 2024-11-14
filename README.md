@@ -1,2 +1,3 @@
 # calc
- Stumid Calculator ~
+
+Cheap Calculator ~
