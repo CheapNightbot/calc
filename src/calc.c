@@ -6,8 +6,15 @@
 #include <string.h>
 #include <regex.h>
 
+// Source: https://gist.github.com/RabaDabaDoba/145049536f815903c79944599c6f952a
+#define BCYN "\e[1;36m"
 #define BGRN "\e[1;32m"
+#define BMAG "\e[1;35m"
+#define BRED "\e[1;31m"
+#define GRN "\e[0;32m"
+#define YEL "\e[0;33m"
 #define reset "\e[0m"
+// ~~~~~~~~~~~~~~~~~~~~~~~~
 
 typedef struct
 {
@@ -50,9 +57,38 @@ int main()
             break;
         }
         // Clear the terminal if user types "clear"
-        else if (strcmp(input, "clear") == 0)
+        else if (strcmp(input, "clear") == 0 || strcmp(input, "clean") == 0)
         {
             system("clear");
+        }
+        else if (strcmp(input, "help") == 0)
+        {
+            // Print a funny and friendly help message
+            printf(BMAG "This is Your Stumid Cheap Calculator! (˶˃ ᵕ ˂˶) .ᐟ.ᐟ\n" reset);
+            printf("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n\n");
+            printf(BCYN "Usage: \n" reset);
+            printf("\n");
+            printf("  Enter an expression in the format: ");
+            printf("<%snumber%s> ", YEL, reset);
+            printf("<%soperator%s> ", YEL, reset);
+            printf("<%snumber%s>\n", YEL, reset);
+            printf("\n");
+            printf(BCYN "Examples:\n" reset);
+            printf("\n");
+            printf("  5 + 3           => 8\n");
+            printf("  10 - 4          => 6\n");
+            printf("  6 * 7           => 42\n");
+            printf("  7 / 3           => 2.33\n");
+            printf("  7 // 3          => 2\n");
+            printf("\n");
+            printf(BCYN "Commands:\n" reset);
+            printf("\n");
+            printf("  %sclear%s / %sclean%s   => Clear the terminal screen.\n", GRN, reset, GRN, reset);
+            printf("  %sexit%s  / %squit%s    => Quit the calculator.\n", GRN, reset, GRN, reset);
+            printf("  %shelp%s            => Show this help message.\n", GRN, reset);
+            printf("\n\n");
+            printf("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n");
+            printf(BMAG "Have fun ando thank you for skipping math classes ~! (; ω ; )ヾ(´∀ ` )\n" reset);
         }
         else if (evaluate_expression(input))
         {
@@ -135,9 +171,12 @@ bool evaluate_expression(char *expr_str)
     }
     else
     {
-        printf("Error: Invalid expression format.\n");
-        printf("Please enter an expression in the format: <number> <operator> <number>\n");
-        printf("For example: 5 + 3, 10 - 4, 6 * 7, or 12 / 4\n");
+        printf("%sError%s: Invalid expression format.\n", BRED, reset);
+        printf("Please enter an expression in the format: ");
+        printf("<%snumber%s> ", YEL, reset);
+        printf("<%soperator%s> ", YEL, reset);
+        printf("<%snumber%s>\n", YEL, reset);
+        printf("Run `%shelp%s` for (really) help ~\n", GRN, reset);
         regfree(&regex);
         return false;
     }
