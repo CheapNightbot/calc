@@ -1,9 +1,11 @@
 #ifndef CALC_H
 #define CALC_H
 
-#include <stdbool.h>
 #include <math.h>
+#include <stdbool.h>
 #include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 
 // Define colors and reset
 // Source: https://gist.github.com/RabaDabaDoba/145049536f815903c79944599c6f952a
@@ -23,10 +25,16 @@ typedef struct
     char oper;
 } expression;
 
+// Declare expr as external
+extern expression expr;
+
 // Function declarations
+bool evaluate_expression(char *expr_str);
+void perform_calculation();
+void show_help();
+
 int addition(int x, int y);
 double division(int x, int y);
-bool evaluate_expression(char *expr_str);
 int multiplication(int x, int y);
 int subtraction(int x, int y);
 
