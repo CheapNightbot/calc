@@ -44,8 +44,8 @@ int main()
             continue;
         }
 
-        // Exit the program if user types "exit"
-        if (strcmp(input, "exit") == 0)
+        // Exit the program if user types "exit" or "quit"
+        if (strcmp(input, "exit") == 0 || strcmp(input, "quit") == 0)
         {
             break;
         }
