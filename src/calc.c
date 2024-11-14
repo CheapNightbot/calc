@@ -1,34 +1,7 @@
-#include <ctype.h>
-#include <math.h>
-#include <stdbool.h>
-#include <stdio.h>
-#include <stdlib.h>
+#include "calc.h"
 #include <string.h>
+#include <stdlib.h>
 #include <regex.h>
-
-// Source: https://gist.github.com/RabaDabaDoba/145049536f815903c79944599c6f952a
-#define BCYN "\e[1;36m"
-#define BGRN "\e[1;32m"
-#define BMAG "\e[1;35m"
-#define BRED "\e[1;31m"
-#define GRN "\e[0;32m"
-#define YEL "\e[0;33m"
-#define reset "\e[0m"
-// ~~~~~~~~~~~~~~~~~~~~~~~~
-
-typedef struct
-{
-    int x;
-    int y;
-    char oper;
-} expression;
-
-// Function declarations
-int addition(int x, int y);
-double division(int x, int y);
-bool evaluate_expression(char *expr_str);
-int multiplication(int x, int y);
-int subtraction(int x, int y);
 
 // Global expression struct
 expression expr;
