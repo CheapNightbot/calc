@@ -2,6 +2,12 @@
 
 A simple and stumid command-line calculator to perform basic arithmetic operations such as addition, subtraction, multiplication, and division. ♡(>ᴗ•)
 
+<div align="center">
+    
+![Demo](https://github.com/user-attachments/assets/af7e817b-17a1-4c19-9dcb-cded4ba714cb)
+
+</div>
+
 <details>
     <summary>TABLE OF CONTENTS</summary>
 
