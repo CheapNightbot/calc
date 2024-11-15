@@ -11,7 +11,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [ubuntu-latest, macos-latest, windows-latest]
+        os: [ubuntu-latest, macos-latest]  # Removed windows-latest
 
     steps:
     - name: Checkout Code
@@ -24,8 +24,6 @@ jobs:
           sudo apt-get install -y gcc make
         elif [ ${{ matrix.os }} == 'macos-latest' ]; then
           brew install gcc make
-        elif [ ${{ matrix.os }} == 'windows-latest' ]; then
-          choco install mingw
         fi
       shell: bash
 
@@ -61,9 +59,6 @@ jobs:
         elif [ ${{ matrix.os }} == 'macos-latest' ]; then
           FILENAME="calc-macos-x86_64-${BUILD_DATE}.zip"
           zip -r $FILENAME build/calc
-        elif [ ${{ matrix.os }} == 'windows-latest' ]; then
-          FILENAME="calc-win-x86_64-${BUILD_DATE}.zip"
-          zip -r $FILENAME build/calc.exe
         fi
         # Upload the binary zip file to the release
         curl -X POST -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
