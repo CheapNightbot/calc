@@ -11,7 +11,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [ubuntu-latest, macos-latest]  # Removed windows-latest
+        os: [ubuntu-latest, macos-latest]
 
     steps:
     - name: Checkout Code
@@ -38,15 +38,21 @@ jobs:
       shell: bash
 
     - name: Create Release
+      id: create_release
       if: github.event_name == 'push' && github.ref == 'refs/heads/main'
       run: |
         RELEASE_TAG=$(date +'%Y-%m-%d')  # Using hyphens for date format
         echo "Creating release $RELEASE_TAG"
         
         # Create a release on GitHub
-        curl -X POST -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+        RESPONSE=$(curl -X POST -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
           -d '{"tag_name": "'"$RELEASE_TAG"'","name": "'"$RELEASE_TAG"'","body": "Automated release of calc binaries."}' \
-          "https://api.github.com/repos/${{ github.repository }}/releases"
+          "https://api.github.com/repos/${{ github.repository }}/releases")
+        
+        RELEASE_ID=$(echo $RESPONSE | jq -r .id)
+        echo "Release ID is $RELEASE_ID"
+        
+        echo "::set-output name=release_id::$RELEASE_ID"
       shell: bash
 
     - name: Upload Binaries to Release
@@ -60,9 +66,13 @@ jobs:
           FILENAME="calc-macos-x86_64-${BUILD_DATE}.zip"
           zip -r $FILENAME build/calc
         fi
+        
+        # Get the release ID from the previous step
+        RELEASE_ID=${{ steps.create_release.outputs.release_id }}
+        
         # Upload the binary zip file to the release
         curl -X POST -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
           -H "Content-Type: application/zip" \
           --data-binary @$FILENAME \
-          "https://uploads.github.com/repos/${{ github.repository }}/releases/${{ steps.create_release.outputs.id }}/assets?name=$FILENAME"
+          "https://uploads.github.com/repos/${{ github.repository }}/releases/$RELEASE_ID/assets?name=$FILENAME"
       shell: bash
