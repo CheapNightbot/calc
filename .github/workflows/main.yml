@@ -27,6 +27,7 @@ jobs:
         elif [ ${{ matrix.os }} == 'windows-latest' ]; then
           choco install mingw
         fi
+      shell: bash
 
     - name: Build
       run: |
@@ -41,18 +42,19 @@ jobs:
     - name: Create Release
       if: github.event_name == 'push' && github.ref == 'refs/heads/main'
       run: |
-        RELEASE_TAG=$(date +'%Y-%m-%d')
+        RELEASE_TAG=$(date +'%Y-%m-%d')  # Using hyphens for date format
         echo "Creating release $RELEASE_TAG"
         
         # Create a release on GitHub
         curl -X POST -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
           -d '{"tag_name": "'"$RELEASE_TAG"'","name": "'"$RELEASE_TAG"'","body": "Automated release of calc binaries."}' \
           "https://api.github.com/repos/${{ github.repository }}/releases"
+      shell: bash
 
     - name: Upload Binaries to Release
       run: |
-        BUILD_DATE=$(date +'%Y-%m-%d')  # Same format for filename
-        
+        BUILD_DATE=$(date +'%Y-%m-%d')
+
         if [ ${{ matrix.os }} == 'ubuntu-latest' ]; then
           FILENAME="calc-linux-x86_64-${BUILD_DATE}.zip"
           zip -r $FILENAME build/calc
@@ -63,9 +65,9 @@ jobs:
           FILENAME="calc-win-x86_64-${BUILD_DATE}.zip"
           zip -r $FILENAME build/calc.exe
         fi
-
         # Upload the binary zip file to the release
         curl -X POST -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
           -H "Content-Type: application/zip" \
           --data-binary @$FILENAME \
           "https://uploads.github.com/repos/${{ github.repository }}/releases/${{ steps.create_release.outputs.id }}/assets?name=$FILENAME"
+      shell: bash
