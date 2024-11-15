@@ -97,6 +97,7 @@ void show_help()
 {
     printf(BMAG "This is Your Stumid Cheap Calculator! (˶˃ ᵕ ˂˶) .ᐟ.ᐟ\n" reset);
     printf("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n\n");
+
     printf(BCYN "Usage: \n" reset);
     printf("\n");
     printf("  Enter an expression in the format: ");
@@ -104,6 +105,16 @@ void show_help()
     printf("<%soperator%s> ", YEL, reset);
     printf("<%snumber%s>\n", YEL, reset);
     printf("\n");
+
+    printf(BCYN "Supported Operators:\n" reset);
+    printf("\n");
+    printf("  %s+%s               => Addition\n", YEL, reset);
+    printf("  %s-%s               => Subtraction\n", YEL, reset);
+    printf("  %s*%s               => Multiplication\n", YEL, reset);
+    printf("  %s/%s               => Division (floating point)\n", YEL, reset);
+    printf("  %s//%s              => Integer division (round to nearest integer)\n", YEL, reset);
+    printf("\n");
+
     printf(BCYN "Examples:\n" reset);
     printf("\n");
     printf("  5 + 3           => 8\n");
@@ -112,12 +123,14 @@ void show_help()
     printf("  7 / 3           => 2.33\n");
     printf("  7 // 3          => 2\n");
     printf("\n");
+
     printf(BCYN "Commands:\n" reset);
     printf("\n");
     printf("  %sclear%s / %sclean%s   => Clear the terminal screen.\n", GRN, reset, GRN, reset);
     printf("  %sexit%s  / %squit%s    => Quit the calculator.\n", GRN, reset, GRN, reset);
     printf("  %shelp%s            => Show this help message.\n", GRN, reset);
     printf("\n\n");
+
     printf("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n");
     printf(BMAG "Have fun ando thank you for skipping math classes ~! (; ω ; )ヾ(´∀ ` )\n" reset);
 }
